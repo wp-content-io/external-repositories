@@ -1,0 +1,22 @@
+# Normalize line endings.
+* text=auto eol=lf
+*.png binary
+*.mo  binary
+
+# Dev-only files: excluded from `git archive` (release zip, Plugin Check tree)
+# and from GitHub "Source code" archives.
+/.github            export-ignore
+/tests              export-ignore
+/CLAUDE.md          export-ignore
+/.claude            export-ignore
+/phpcs.xml.dist     export-ignore
+/composer.json      export-ignore
+/composer.lock      export-ignore
+/.editorconfig      export-ignore
+/.gitignore         export-ignore
+/.gitattributes     export-ignore
+/README.md          export-ignore
+/CONTRIBUTING.md    export-ignore
+/SECURITY.md        export-ignore
+/CODE_OF_CONDUCT.md export-ignore
+/CHANGELOG.md       export-ignore

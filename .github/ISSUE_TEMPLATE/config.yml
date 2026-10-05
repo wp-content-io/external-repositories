@@ -1,0 +1,14 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Report a security vulnerability
+    url: https://github.com/wp-content-io/external-repositories/security/advisories/new
+    about: Please report vulnerabilities privately (see SECURITY.md), never in a public issue.
+  - name: Security policy
+    url: https://github.com/wp-content-io/external-repositories/blob/develop/SECURITY.md
+    about: Supported versions, response times and the email fallback.
+  - name: wp-content.io service support
+    url: https://wp-content.io
+    about: Account, billing, dashboard or registry questions about the hosted service. Email support@wp-content.io.
+  - name: Documentation
+    url: https://docs.wp-content.io/
+    about: User documentation for wp-content.io and this plugin.

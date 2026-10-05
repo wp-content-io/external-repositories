@@ -1,0 +1,9 @@
+vendor/
+.DS_Store
+.claude/
+.idea/
+.env*
+*.zip
+manifest.json
+/composer.lock
+/build/

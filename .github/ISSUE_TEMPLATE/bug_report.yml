@@ -1,0 +1,101 @@
+name: Bug report
+description: Something does not work as expected in the plugin.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug.
+
+        - **Security issue?** Do not file it here: see [SECURITY.md](https://github.com/wp-content-io/external-repositories/blob/develop/SECURITY.md).
+        - **wp-content.io account, billing or service issue?** Write to support@wp-content.io.
+        - **Never paste an API key.** Redact the `x-api-key` header and any key from logs and screenshots.
+  - type: input
+    id: plugin-version
+    attributes:
+      label: Plugin version
+      placeholder: "1.3.1"
+    validations:
+      required: true
+  - type: input
+    id: wp-version
+    attributes:
+      label: WordPress version
+      placeholder: "6.8.2"
+    validations:
+      required: true
+  - type: input
+    id: php-version
+    attributes:
+      label: PHP version
+      placeholder: "8.3.12"
+    validations:
+      required: true
+  - type: dropdown
+    id: install-type
+    attributes:
+      label: Installation type
+      options:
+        - Single site
+        - Multisite (network)
+    validations:
+      required: true
+  - type: dropdown
+    id: source-type
+    attributes:
+      label: Source type
+      options:
+        - wp-content.io
+        - Custom compatible server
+        - Several sources
+        - Not related to a source (settings, self-update…)
+    validations:
+      required: true
+  - type: dropdown
+    id: install-method
+    attributes:
+      label: How was the plugin installed?
+      description: Only the `external-repositories.zip` release asset is supported.
+      options:
+        - Release asset external-repositories.zip
+        - Self-update from a previous version
+        - Git clone / other
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Go to Settings → External Repositories
+        2. …
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: Include error messages shown in the admin.
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Debug log (redacted)
+      description: Relevant lines of `wp-content/debug.log` with `WP_DEBUG` and `WP_DEBUG_LOG` enabled. Remove API keys and personal data.
+      render: text
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checklist
+      options:
+        - label: I searched the existing issues and this is not a duplicate.
+          required: true
+        - label: I removed every API key and secret from this report.
+          required: true

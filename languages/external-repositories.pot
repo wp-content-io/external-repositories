@@ -1,0 +1,297 @@
+# Copyright (C) 2026 Alexandre Chastan
+# This file is distributed under the GPLv2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: External Repositories 1.3.1\n"
+"Report-Msgid-Bugs-To: https://wp-content.io\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-10-05T15:43:43+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: external-repositories\n"
+
+#. Plugin Name of the plugin
+#: external-repositories.php
+msgid "External Repositories"
+msgstr ""
+
+#. Plugin URI of the plugin
+#. Author URI of the plugin
+#: external-repositories.php
+msgid "https://wp-content.io"
+msgstr ""
+
+#. Description of the plugin
+#: external-repositories.php
+msgid "Manage external sources for install private plugins and themes."
+msgstr ""
+
+#. Author of the plugin
+#: external-repositories.php
+msgid "Alexandre Chastan"
+msgstr ""
+
+#: external-repositories.php:52
+msgid "Settings"
+msgstr ""
+
+#: src/ExternalPluginRepository.php:52
+#: src/ExternalRepositoryManager.php:79
+msgid "Manage repository settings"
+msgstr ""
+
+#: src/ExternalRepository.php:169
+msgid "Repository is temporarily unavailable, please try again in a few minutes."
+msgstr ""
+
+#: src/ExternalRepository.php:174
+msgid "The repository URL must use HTTPS to send your API key."
+msgstr ""
+
+#: src/ExternalRepository.php:210
+msgid "Invalid response from repository."
+msgstr ""
+
+#: src/ExternalRepository.php:216
+msgid "Cannot found repository, check the API Key you provided."
+msgstr ""
+
+#: src/ExternalRepository.php:217
+#: src/ExternalRepository.php:221
+#: src/ExternalRepositoryManager.php:76
+msgid "Check repository settings"
+msgstr ""
+
+#: src/ExternalRepository.php:220
+msgid "API Key you provided missing read permissions."
+msgstr ""
+
+#: src/ExternalRepositoryManager.php:75
+msgid "An error occurred while fetching themes from the repository. This may be due to an invalid API key, missing permissions, domain restrictions, or a server issue. If everything looks correct, please contact support."
+msgstr ""
+
+#: src/ExternalRepositoryManager.php:133
+msgid "External Repositories plugin visibility"
+msgstr ""
+
+#: src/ExternalRepositoryManager.php:134
+msgid "Hide from the plugins list"
+msgstr ""
+
+#: src/ExternalRepositoryManager.php:340
+msgid "Quick Help"
+msgstr ""
+
+#: src/ExternalRepositoryManager.php:348
+msgid "FAQ"
+msgstr ""
+
+#: src/ExternalRepositoryManager.php:356
+msgid "About"
+msgstr ""
+
+#: src/ExternalRepositoryManager.php:362
+msgid "Need help?"
+msgstr ""
+
+#: src/ExternalRepositoryManager.php:363
+msgid "Full documentation"
+msgstr ""
+
+#: src/ExternalRepositoryManager.php:364
+msgid "Contact support"
+msgstr ""
+
+#: src/ExternalRepositoryManager.php:378
+msgid "What is an External Repository?"
+msgstr ""
+
+#: src/ExternalRepositoryManager.php:379
+msgid "An external repository allows you to manage and serve private plugins and themes, outside of the official WordPress.org directory."
+msgstr ""
+
+#: src/ExternalRepositoryManager.php:381
+#: views/repository-settings.php:25
+msgid "Name"
+msgstr ""
+
+#: src/ExternalRepositoryManager.php:381
+msgid "Used to identify your repository within the interface. It can be any label you like."
+msgstr ""
+
+#: src/ExternalRepositoryManager.php:382
+#: views/repository-settings.php:30
+msgid "Registry URL"
+msgstr ""
+
+#: src/ExternalRepositoryManager.php:382
+msgid "Choose wp-content.io to use the official registry."
+msgstr ""
+
+#: src/ExternalRepositoryManager.php:382
+msgid "Select Custom URL if you’re hosting your own registry (e.g., a local server or self-hosted API)."
+msgstr ""
+
+#: src/ExternalRepositoryManager.php:382
+msgid "Must be a valid URL ending with a slash (/)."
+msgstr ""
+
+#: src/ExternalRepositoryManager.php:383
+#: views/repository-settings.php:56
+msgid "API Key"
+msgstr ""
+
+#: src/ExternalRepositoryManager.php:383
+msgid "This key authenticates your requests and grants access to your private packages. Keep it safe."
+msgstr ""
+
+#: src/ExternalRepositoryManager.php:384
+#: views/repository-settings.php:68
+msgid "Supports"
+msgstr ""
+
+#: src/ExternalRepositoryManager.php:384
+msgid "Check whether this repository distributes plugins, themes, or both. Only the selected types will be fetched and displayed."
+msgstr ""
+
+#: src/ExternalRepositoryManager.php:385
+#: views/repository-settings.php:79
+msgid "Enabled"
+msgstr ""
+
+#: src/ExternalRepositoryManager.php:385
+msgid "When enabled, WordPress will check this repository for updates and new packages during regular update checks."
+msgstr ""
+
+#: src/ExternalRepositoryManager.php:392
+msgid "Can I connect multiple repositories?"
+msgstr ""
+
+#: src/ExternalRepositoryManager.php:392
+msgid "Yes, but each name must be unique. Be aware that conflicts may occur if multiple repositories contain plugins with the same slug."
+msgstr ""
+
+#: src/ExternalRepositoryManager.php:393
+msgid "Can I add repositories programmatically?"
+msgstr ""
+
+#: src/ExternalRepositoryManager.php:393
+msgid "Yes, you can use the `external_repositories` filter to declare repositories. Those added this way won’t appear in this screen."
+msgstr ""
+
+#: src/ExternalRepositoryManager.php:394
+msgid "Is the API key encrypted?"
+msgstr ""
+
+#: src/ExternalRepositoryManager.php:394
+msgid "Yes, if the SECURE_AUTH_KEY constant is defined in wp-config.php. Be careful: if this value changes, you’ll need to re-save your repositories to restore access."
+msgstr ""
+
+#: src/ExternalRepositoryManager.php:395
+msgid "What happens if I uninstall the plugin?"
+msgstr ""
+
+#: src/ExternalRepositoryManager.php:395
+msgid "Uninstalling the plugin will remove the database tables and repository configuration. However, any plugins or themes already installed from private repositories will remain. Updates will no longer be checked."
+msgstr ""
+
+#: src/ExternalRepositoryManager.php:401
+msgid "This plugin is developed and maintained by Alexandre Chastan. It is freely distributed via wp-content.io."
+msgstr ""
+
+#: src/ExternalRepositoryManager.php:402
+msgid "Visit wp-content.io"
+msgstr ""
+
+#: src/ExternalRepositoryManager.php:403
+msgid "Plugin official page"
+msgstr ""
+
+#: src/ExternalRepositoryManager.php:486
+msgid "Security check failed"
+msgstr ""
+
+#: src/ExternalRepositoryManager.php:490
+msgid "Sorry, you are not allowed to manage repositories."
+msgstr ""
+
+#: src/ExternalRepositoryManager.php:509
+msgid "The repository URL must be a valid HTTPS URL."
+msgstr ""
+
+#: src/ExternalRepositoryManager.php:551
+msgid "Settings updated"
+msgstr ""
+
+#: src/ExternalRepositoryManager.php:652
+msgid "Browse plugins"
+msgstr ""
+
+#: src/ExternalRepositoryManager.php:659
+msgid "Browse themes"
+msgstr ""
+
+#: src/ExternalRepositoryManager.php:671
+msgid "Delete repository"
+msgstr ""
+
+#: src/ExternalRepositoryManager.php:689
+msgid "Repository deleted"
+msgstr ""
+
+#: src/ExternalThemeRepository.php:165
+msgid "Theme details"
+msgstr ""
+
+#: updater.php:25
+msgid "Invalid plugin manifest."
+msgstr ""
+
+#: updater.php:183
+msgid "The downloaded package does not match the expected checksum."
+msgstr ""
+
+#: views/repository-settings.php:38
+msgid "Use official wp-content.io registry URL"
+msgstr ""
+
+#: views/repository-settings.php:45
+msgid "Custom URL"
+msgstr ""
+
+#: views/repository-settings.php:46
+msgid "Use a custom registry URL"
+msgstr ""
+
+#: views/repository-settings.php:60
+#: views/repository-settings.php:99
+msgid "Enter a read-only API Key to connect registry"
+msgstr ""
+
+#: views/repository-settings.php:63
+msgid "Replace API Key"
+msgstr ""
+
+#: views/repository-settings.php:71
+msgid "Plugins"
+msgstr ""
+
+#: views/repository-settings.php:74
+msgid "Themes"
+msgstr ""
+
+#: views/repository-settings.php:82
+msgid "Activate this repository"
+msgstr ""
+
+#: views/theme-preview.php:54
+msgid "By"
+msgstr ""
+
+#: views/theme-preview.php:68
+msgid "Changelog"
+msgstr ""

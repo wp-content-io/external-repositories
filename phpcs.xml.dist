@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<ruleset name="external-repositories">
+	<description>WordPress Coding Standards and PHP 7.1+ compatibility for External Repositories.</description>
+
+	<file>.</file>
+	<exclude-pattern>/vendor/*</exclude-pattern>
+	<exclude-pattern>/build/*</exclude-pattern>
+	<exclude-pattern>/languages/*</exclude-pattern>
+	<exclude-pattern>/assets/*</exclude-pattern>
+	<!-- Third-party Markdown parser (Slimdown, Johnny Broadway), kept close to upstream: ~224 style findings. -->
+	<exclude-pattern>/src/Slimdown\.php$</exclude-pattern>
+
+	<!--
+		Inline "phpcs:ignore Sniff.Code (double dash) reason" annotations are honoured
+		(no ignore-annotations arg). Some name Plugin Check sniffs
+		(PluginCheck.*), unknown to this ruleset: PHPCS ignores them silently.
+	-->
+
+	<arg name="extensions" value="php"/>
+	<arg name="colors"/>
+	<arg value="sp"/>
+	<arg name="parallel" value="8"/>
+
+	<!-- PHP 7.1+ and WordPress 6.4+ (see the plugin header). -->
+	<config name="testVersion" value="7.1-"/>
+	<config name="minimum_wp_version" value="6.4"/>
+
+	<rule ref="PHPCompatibilityWP"/>
+
+	<rule ref="WordPress">
+		<!-- Class files are named after their class (src/ExternalRepository.php). Intentional. -->
+		<exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
+		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase"/>
+
+		<!--
+			TEMPORARY: non-autofixable findings left after the phpcbf pass (see the
+			"WPCS: fix the remaining non-autofixable errors" issue). Remove each line
+			once its sniff family is clean.
+		-->
+		<exclude name="Squiz.Commenting"/>
+		<exclude name="Generic.Commenting"/>
+	</rule>
+
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<property name="text_domain" type="array">
+				<element value="external-repositories"/>
+			</property>
+		</properties>
+	</rule>
+
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+		<properties>
+			<property name="prefixes" type="array">
+				<element value="external_repositories"/>
+				<element value="external_repository"/>
+				<element value="EXTERNAL_REPOSITORIES"/>
+				<element value="ExternalRepository"/>
+				<element value="ExternalRepositoryManager"/>
+				<element value="ExternalPluginRepository"/>
+				<element value="ExternalThemeRepository"/>
+			</property>
+		</properties>
+	</rule>
+</ruleset>

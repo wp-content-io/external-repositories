@@ -1,0 +1,22 @@
+{
+    "name": "wp-content-io/external-repositories",
+    "description": "Dev tools only (coding standards). The plugin itself has no Composer dependencies.",
+    "type": "wordpress-plugin",
+    "license": "GPL-2.0-or-later",
+    "require-dev": {
+        "dealerdirect/phpcodesniffer-composer-installer": "^1.0",
+        "phpcompatibility/phpcompatibility-wp": "^2.1",
+        "wp-coding-standards/wpcs": "^3.1"
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        },
+        "sort-packages": true
+    },
+    "scripts": {
+        "lint": "find . -name '*.php' -not -path './vendor/*' -not -path './.git/*' -print0 | xargs -0 -n1 php -l > /dev/null",
+        "phpcs": "phpcs",
+        "phpcbf": "phpcbf"
+    }
+}

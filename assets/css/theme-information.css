@@ -1,0 +1,39 @@
+#theme-information {
+    background: #fff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    height: 100%;
+    padding: 0;
+}
+
+#theme-information-scrollable {
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    height: 100%;
+}
+
+#theme-information-title {
+    padding: 26px;
+    background: #f6f7f7;
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    gap: 32px;
+}
+
+#theme-information-title h2 {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+#theme-information-title img {
+    max-width: 100%;
+}
+
+#theme-information-content {
+    padding: 26px;
+}

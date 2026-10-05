@@ -1,0 +1,144 @@
+# Continuous integration: syntax, coding standards, DCO and Plugin Check.
+#
+# Every action is pinned by full commit SHA with its version as a trailing
+# comment (see README-workflows.md); Dependabot bumps both.
+
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main, develop]
+
+# No token permission by default; each job declares a read-only one. Never use
+# `pull_request_target` here: fork code must never run with secrets or a
+# write token.
+permissions: {}
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    name: PHP ${{ matrix.php }} syntax
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ['7.1', '7.4', '8.0', '8.2', '8.3', '8.4']
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      # Official PHP images, no third-party setup action. The checkout runs on
+      # the runner (old images ship a glibc too old for the actions' Node.js);
+      # only `php -l` runs in the container. 7.1/7.4/8.0 are EOL but pullable.
+      - name: php -l on every PHP file
+        env:
+          PHP_VERSION: ${{ matrix.php }}
+        run: |
+          docker run --rm -v "$PWD:/app:ro" -w /app "php:${PHP_VERSION}-cli" sh -c \
+            "find . -name '*.php' -not -path './vendor/*' -not -path './.git/*' -print0 | xargs -0 -n1 php -l > /dev/null"
+
+  phpcs:
+    name: PHPCS (WPCS + PHPCompatibilityWP)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # 2.37.2
+        with:
+          php-version: '8.3'
+          tools: composer:v2
+          coverage: none
+
+      - name: Install dev tools
+        run: composer install --no-interaction --no-progress --prefer-dist
+
+      # Ruleset in phpcs.xml.dist (WordPress + PHPCompatibilityWP, testVersion 7.1-).
+      - name: Run PHPCS
+        run: vendor/bin/phpcs --report-full --report-summary
+
+  dco:
+    name: DCO sign-off
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      # Every non-merge commit of the PR needs a "Signed-off-by:" trailer that
+      # matches its author (name and email). Fix with:
+      #   git rebase --signoff origin/<base> && git push --force-with-lease
+      - name: Every commit is signed off by its author
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          fail=0
+          for c in $(git rev-list --no-merges "$BASE_SHA..$HEAD_SHA"); do
+            author="$(git show -s --format='%an <%ae>' "$c")"
+            if git show -s --format='%(trailers:key=Signed-off-by,valueonly)' "$c" \
+                 | sed 's/[[:space:]]*$//' | grep -qxF "$author"; then
+              echo "ok   $c ($author)"
+            else
+              echo "::error::Commit $c has no 'Signed-off-by: $author' trailer. Run 'git rebase --signoff $BASE_SHA' and force-push."
+              fail=1
+            fi
+          done
+          exit $fail
+
+  plugin-check:
+    name: Plugin Check
+    runs-on: ubuntu-latest
+    # Read-only on purpose: the action also tries to post a PR summary comment
+    # (needs pull-requests: write); without it, it logs "Failed to post PR
+    # comment" and carries on. Results stay visible as file annotations.
+    permissions:
+      contents: read
+    # Blocking on ERRORS only. In plugin-check-action v1.1.9 (src/main.ts) only
+    # results of type ERROR set the exit code; WARNINGS are annotations and fail
+    # the job only with `strict: true` (default false). `ignore-warnings` would
+    # hide them entirely: leave it false so they stay visible.
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      # Check the tree exactly as it ships: .gitattributes export-ignore applies.
+      - name: Build the shipped tree
+        run: |
+          mkdir -p build
+          git archive --format=tar --prefix=external-repositories/ HEAD | tar -x -C build
+          ls -la build/external-repositories
+
+      - uses: WordPress/plugin-check-action@10857da14b6c2246d15402b3e69f777edcf8c12e # v1.1.9
+        with:
+          build-dir: build/external-repositories
+          slug: external-repositories
+          wp-version: latest
+          # Experimental checks change often; keep CI deterministic.
+          include-experimental: false
+          # Exactly ONE exclusion: the `plugin_updater_detected` error code of the
+          # `plugin_updater` check, raised by the `Update URI` header. This plugin
+          # IS an updater (Update URI, update_plugins_{host}, update_themes_{host},
+          # plugins_api, themes_api, upgrader_pre_download): that is its purpose,
+          # and it is only forbidden for plugins hosted on wordpress.org, which
+          # this one is not. Ignore the code, not the whole check, so any other
+          # finding (of this check or any other) still fails the build. Never
+          # widen this list: annotate the code (`// phpcs:ignore <Sniff.Code> --
+          # <reason>`) instead.
+          ignore-codes: |
+            plugin_updater_detected

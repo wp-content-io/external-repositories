@@ -1,0 +1,17 @@
+# Keep GitHub Actions current. Every action is pinned by full commit SHA with
+# a trailing `# vX.Y.Z` comment: Dependabot updates the SHA and the comment
+# together (it also bumps the actions pinned inside composite actions it can
+# see only through their own releases, i.e. not here).
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    groups:
+      github-actions:
+        patterns: ['*']
+    commit-message:
+      prefix: "⬆️"
+    labels: [dependencies]
