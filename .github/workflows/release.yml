@@ -257,7 +257,7 @@ jobs:
       - name: Check inputs and the downloaded zip
         run: |
           for v in AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY S3_ENDPOINT S3_BUCKET AWS_DEFAULT_REGION S3_PREFIX PUBLIC_BASE; do
-            [ -n "${!v}" ] || { echo "::error::$v is not set in the downloads environment"; exit 1; }
+            [ -n "${!v}" ] || { echo "::error::$v is empty: check the STORAGE_* secrets and the STORAGE_REGION, STORAGE_PREFIX and DOWNLOADS_BASE_URL variables of the downloads environment"; exit 1; }
           done
           echo "$SHA256  $SLUG.zip" | sha256sum -c -
           jq -e --arg v "$VERSION" '.Version == $v' manifest.json > /dev/null
