@@ -173,12 +173,18 @@ class ExternalPluginRepository {
 				return $update;
 			}
 
+			// A source that does not announce a version has no update information to give.
+			if ( empty( $result->version ) ) {
+				return $update;
+			}
+
 			$plugin_data = array(
 				'slug'    => $slug,
 				'plugin'  => $plugin_file,
 				'version' => $result->version,
 				'tested'  => $result->tested ?? '',
-				'package' => $result->download_link,
+				// Without a package, WordPress still reports the version and shows "Automatic update is unavailable".
+				'package' => $result->download_link ?? '',
 				'icons'   => $result->icons ?? array(),
 			);
 

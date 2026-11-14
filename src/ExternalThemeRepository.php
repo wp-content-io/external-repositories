@@ -198,10 +198,16 @@ class ExternalThemeRepository {
 				return $update;
 			}
 
+			// A source that does not announce a version has no update information to give.
+			if ( empty( $result->version ) ) {
+				return $update;
+			}
+
 			$theme_data = array(
 				'theme'   => $theme_stylesheet,
 				'version' => $result->version,
-				'package' => $result->download_link,
+				// Without a package, WordPress still reports the version and shows "Automatic update is unavailable".
+				'package' => $result->download_link ?? '',
 				'url'     => $this->get_theme_preview_url( $theme_stylesheet, true ),
 			);
 

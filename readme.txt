@@ -24,6 +24,9 @@ Comprehensive documentation is available at [docs.wp-content.io](https://docs.wp
 
 == Changelog ==
 
+= Unreleased =
+- 🐛 Update checks no longer raise PHP warnings when a source omits `version` or `download_link` in its response
+
 = 1.3.1 =
 - 🎨 Follow the WordPress Coding Standards (strict comparisons, Yoda conditions, no assignments in conditions) and document the remaining exceptions. No functional change.
 - 🔧 Add the PHP_CodeSniffer configuration (`phpcs.xml.dist`)
